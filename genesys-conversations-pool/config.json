@@ -1,0 +1,11 @@
+{
+    "genesys": {
+        "auth": {
+            "url": "https://login.mypurecloud.com/oauth/token",
+            "clientId": "d0673549-42fe-4227-88ad-ef373a5665d9",
+            "clientSecret": "nhiHI5T6t_WfYUNR2ch4fMBXYpN-VhZ0ZIJngEYhvBE",
+            "content": "grant_type=client_credentials"
+        },
+        "urlBase": "https://api.mypurecloud.com/api/v2"
+    }
+}
