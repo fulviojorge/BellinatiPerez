@@ -45,9 +45,10 @@ const espressoApi = {
         let url = `${apiConfig.urlBase}/sendvid/`;
         let postConfig = await this.getBasicConfig();
 
-        console.log("postConfig", postConfig);
         //return axios.post(url, postData, postConfig);
-        console.log("Lero Lero - Mandei: " + conversationId);
+        return new Promise((resolve, reject) => {
+            (getRandomInt(0, 100) % 2 == 0) ? reject("Random") : resolve("Lucky");
+        });
     },
 
     checkvid: async function (conversationId) {
@@ -64,6 +65,13 @@ const espressoApi = {
 };
 
 module.exports = { espressoApi }
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
 /*
 
 curl--location--request POST 'https: //qualicorp.espressolw.com/api/auth/authenticate' \

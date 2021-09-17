@@ -34,13 +34,9 @@ genesysApi.createJob("2021-09-16", "2021-09-17")
         console.log("Result:", conversations);
         console.log(`Total: ${conversations.length} conversations processed`);
 
-
-
+        verifyExistingConversations(conversations);
     })
     .catch((e) => { console.log("Main error", e) });
-
-
-
 
 
 function verifyConversations(cursor, data) {
@@ -55,6 +51,63 @@ function verifyConversations(cursor, data) {
         output.push(c.conversationId);
     });
     return output;
+}
+
+function verifyExistingConversations(conversations) {
+    console.log("\n--- Verifying all conversations\n");
+
+    let outputData = {
+        alreadyInBase: [],
+        succefulSent: [],
+        failedOnCheck: [],
+        failedOnSend: [],
+    };
+
+    let concurrentTasksCount = 0;
+    let taskList = [];
+
+    conversations.forEach(async id => {
+
+        while (concurrentTasksCount++ > 10)    // Limit Takss
+            await sleep(500);
+
+        taskList.push(checkAndInsertCnversations(id, outputData).finally(concurrentTasksCount--));
+    });
+
+    Promise.all(taskList).then(() => {
+
+        console.log("outputdata:", outputData);
+        console.log("Fin");
+    });
+}
+
+function checkAndInsertCnversations(id, outputData) {
+    return new Promise((resolve, reject) => {
+
+        espressoApi.checkvid(id)
+            .then((checkResponse) => {
+                if (checkResponse.data.result) {
+                    outputData.alreadyInBase.push(id);
+                }
+                else {
+                    espressoApi.sendvid(id)
+                        .then((sendResponse) => {
+                            outputData.succefulSent.push(id);
+                            resolve();
+                        })
+                        .catch((err) => {
+                            outputData.failedOnSend.push(id)
+                            console.log("Error on send " + id, err);
+                            resolve();
+                        });
+                }
+            })
+            .catch((err) => {
+                outputData.failedOnCheck.push(id)
+                console.log("Error on check " + id, err);
+                resolve();
+            });
+    });
 }
 
 function sleep(ms) {
