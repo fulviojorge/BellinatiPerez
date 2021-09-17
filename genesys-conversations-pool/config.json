@@ -7,5 +7,13 @@
             "content": "grant_type=client_credentials"
         },
         "urlBase": "https://api.mypurecloud.com/api/v2"
+    },
+    "espresso": {
+        "auth": {
+            "url": "https://qualicorp.espressolw.com/api/auth/authenticate",
+            "clientId": "336a557298040121882450ebd4804091d3f7da99",
+            "clientSecret": "r17oj4lPQZawqualicorpwDdVbZvSHw8040mOzXj1LQXh"
+        },
+        "urlBase": "https://qualicorp.espressolw.com/api/espresso"
     }
 }

@@ -1,7 +1,7 @@
 'use strict'
 const axios = require('axios');
 const moment = require('moment');
-const apiConfig = require('./config.json')
+const apiConfig = require('./config.json').genesys;
 
 
 const genesysApi = {
@@ -34,8 +34,8 @@ const genesysApi = {
     },
 
     getAccessToken: function () {
-        let clientId = apiConfig.genesys.auth.clientId;
-        let clientSecret = apiConfig.genesys.auth.clientSecret;
+        let clientId = apiConfig.auth.clientId;
+        let clientSecret = apiConfig.auth.clientSecret;
         let encodedData = Buffer.from(clientId + ':' + clientSecret).toString('base64');
 
         let config = {
@@ -44,7 +44,7 @@ const genesysApi = {
                 'Authorization': 'Basic ' + encodedData
             },
         };
-        return axios.post(apiConfig.genesys.auth.url, apiConfig.genesys.auth.content, config);
+        return axios.post(apiConfig.auth.url, apiConfig.auth.content, config);
     },
 
     createJob: async function (startOfPeriod, endOfPeriod) {
@@ -53,17 +53,17 @@ const genesysApi = {
             interval: `${moment(startOfPeriod).toISOString()}/${moment(endOfPeriod).toISOString()}`
         };
 
-        let url = `${apiConfig.genesys.urlBase}/analytics/conversations/details/jobs`;
+        let url = `${apiConfig.urlBase}/analytics/conversations/details/jobs`;
         return axios.post(url, postData, await this.getBasicConfig());
     },
 
     verifyJob: async function (jobId) {
-        let url = `${apiConfig.genesys.urlBase}/analytics/conversations/details/jobs/${jobId}`;
+        let url = `${apiConfig.urlBase}/analytics/conversations/details/jobs/${jobId}`;
         return axios.get(url, await this.getBasicConfig());
     },
 
     getResults: async function (jobId, pageSize, cursor) {
-        let url = `${apiConfig.genesys.urlBase}/analytics/conversations/details/jobs/${jobId}/results?pageSize=${pageSize}`;
+        let url = `${apiConfig.urlBase}/analytics/conversations/details/jobs/${jobId}/results?pageSize=${pageSize}`;
         if (cursor != null && cursor != "") {
             url += "&cursor=" + cursor;
         }
@@ -71,7 +71,7 @@ const genesysApi = {
     },
 
     requestError: function (response) {
-        console.log("Error on API Call");
+        console.log("Error on genesys API Call");
     },
 };
 

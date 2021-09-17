@@ -1,10 +1,10 @@
 const { genesysApi } = require("./genesysApi");
+const { espressoApi } = require("./espressoApi");
 
 let conversations = [];
 
-genesysApi.createJob("2021-03-10", "2021-09-15")
+genesysApi.createJob("2021-09-16", "2021-09-17")
     .then(async (createResponse) => {
-
 
         let jobId = createResponse.data.jobId;
 
@@ -34,8 +34,14 @@ genesysApi.createJob("2021-03-10", "2021-09-15")
         console.log("Result:", conversations);
         console.log(`Total: ${conversations.length} conversations processed`);
 
+
+
     })
-    .catch((e) => { console.log("MAin error", e) });
+    .catch((e) => { console.log("Main error", e) });
+
+
+
+
 
 function verifyConversations(cursor, data) {
 
@@ -45,10 +51,11 @@ function verifyConversations(cursor, data) {
     console.log(`${cursor}: ${data.conversations.length}`);
 
     let output = [];
-    data.conversations.forEach((c) => output.push(c.conversationId))
+    data.conversations.forEach((c) => {
+        output.push(c.conversationId);
+    });
     return output;
 }
-
 
 function sleep(ms) {
     return new Promise((resolve) => {
