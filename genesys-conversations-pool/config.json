@@ -11,9 +11,9 @@
     "espresso": {
         "auth": {
             "url": "https://qualicorp.espressolw.com/api/auth/authenticate",
-            "clientId": "336a557298040121882450ebd4804091d3f7da99",
-            "clientSecret": "r17oj4lPQZawqualicorpwDdVbZvSHw8040mOzXj1LQXh"
+            "clientId": "insert your EspressoLW oAuth ClientID here",
+            "clientSecret": "insert your EspressoLW oAuth ClientSecret here"
         },
-        "urlBase": "https://qualicorp.espressolw.com/api/espresso"
+        "urlBase": "https://<<customerURL>>.espressolw.com/api/espresso"
     }
 }
