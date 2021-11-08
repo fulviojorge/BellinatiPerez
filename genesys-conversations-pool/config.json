@@ -10,7 +10,7 @@
     },
     "espresso": {
         "auth": {
-            "url": "https://qualicorp.espressolw.com/api/auth/authenticate",
+            "url": "https://<<customerURL>>.espressolw.com/api/auth/authenticate",
             "clientId": "insert your EspressoLW oAuth ClientID here",
             "clientSecret": "insert your EspressoLW oAuth ClientSecret here"
         },
